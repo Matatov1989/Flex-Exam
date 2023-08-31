@@ -67,7 +67,7 @@
                     android:textSize="20sp"
                     android:textColor="@color/black"
                     android:textStyle="italic"
-                    tools:text="Vote average: 7.4" />
+                    tools:text="Original language is en" />
 
             </LinearLayout>
         </LinearLayout>
