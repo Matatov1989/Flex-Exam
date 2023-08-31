@@ -7,7 +7,6 @@ import com.example.flexexam.data.MovieUiState
 import com.example.flexexam.enums.MovieType
 import com.example.flexexam.repository.MovieRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
