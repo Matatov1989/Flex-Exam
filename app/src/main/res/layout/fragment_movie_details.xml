@@ -66,7 +66,7 @@
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="@{movie.release_date}"
+                                android:text="@{movie.releaseDate}"
                                 android:textColor="@color/black"
                                 tools:text="2023-07-05" />
 
@@ -82,7 +82,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:layout_gravity="center"
-                                app:posterImageUrl="@{movie.poster_path}"
+                                app:posterImageUrl="@{movie.posterPath}"
                                 app:srcCompat="@drawable/ic_android" />
 
                         </LinearLayout>
@@ -150,7 +150,7 @@
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="@{movie.original_language}"
+                                android:text="@{movie.originalLanguage}"
                                 android:textColor="@color/black"
                                 android:textSize="20sp"
                                 tools:text="1268.898" />
@@ -243,7 +243,7 @@
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="@{String.valueOf(movie.vote_average)}"
+                                android:text="@{String.valueOf(movie.voteAverage)}"
                                 android:textColor="@color/black"
                                 android:textSize="20sp"
                                 tools:text="8.1" />
@@ -266,7 +266,7 @@
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="@{String.valueOf(movie.vote_count)}"
+                                android:text="@{String.valueOf(movie.voteCount)}"
                                 android:textColor="@color/black"
                                 android:textSize="20sp"
                                 tools:text="754" />

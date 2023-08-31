@@ -4,23 +4,24 @@ import android.os.Parcel
 import android.os.Parcelable
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.google.gson.annotations.SerializedName
 
 @Entity(tableName = "MovieTable")
 data class Movie(
     @PrimaryKey
-    val id: Int,
-    val adult: Boolean,
-    val backdrop_path: String,
-    val original_language: String,
-    val original_title: String,
-    val overview: String,
-    val popularity: Float,
-    val poster_path: String,
-    val release_date: String,
-    val title: String,
-    val video: Boolean,
-    val vote_average: String,
-    val vote_count: String
+    @SerializedName("id") val id: Int,
+    @SerializedName("adult") val adult: Boolean,
+    @SerializedName("backdrop_path") val backdropPath: String,
+    @SerializedName("original_language") val originalLanguage: String,
+    @SerializedName("original_title") val originalTitle: String,
+    @SerializedName("overview") val overview: String,
+    @SerializedName("popularity") val popularity: Float,
+    @SerializedName("poster_path") val posterPath: String,
+    @SerializedName("release_date") val releaseDate: String,
+    @SerializedName("title") val title: String,
+    @SerializedName("video") val video: Boolean,
+    @SerializedName("vote_average") val voteAverage: String,
+    @SerializedName("vote_count") val voteCount: String
 )
     : Parcelable {
     constructor(parcel: Parcel) : this(
@@ -42,17 +43,17 @@ data class Movie(
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeInt(id)
         parcel.writeByte(if (adult) 1 else 0)
-        parcel.writeString(backdrop_path)
-        parcel.writeString(original_language)
-        parcel.writeString(original_title)
+        parcel.writeString(backdropPath)
+        parcel.writeString(originalLanguage)
+        parcel.writeString(originalTitle)
         parcel.writeString(overview)
         parcel.writeFloat(popularity)
-        parcel.writeString(poster_path)
-        parcel.writeString(release_date)
+        parcel.writeString(posterPath)
+        parcel.writeString(releaseDate)
         parcel.writeString(title)
         parcel.writeByte(if (video) 1 else 0)
-        parcel.writeString(vote_average)
-        parcel.writeString(vote_count)
+        parcel.writeString(voteAverage)
+        parcel.writeString(voteCount)
     }
 
     override fun describeContents(): Int {

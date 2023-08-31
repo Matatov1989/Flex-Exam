@@ -29,14 +29,14 @@ class MovieListAdapter (
     override fun onBindViewHolder(holder: MovieListAdapter.MovieViewHolder, position: Int) {
         Glide
             .with(holder.itemView)
-            .load("${POSTER_IMG_URL}${movies[position].poster_path}")
+            .load("${POSTER_IMG_URL}${movies[position].posterPath}")
             .centerCrop()
             .placeholder(R.drawable.ic_android)
             .into(holder.imageViewPoster)
 
         holder.textViewTitle.text = movies[position].title
-        holder.textViewAvg.text = context.getString(R.string.strRating, movies[position].vote_average)
-        holder.textViewLanguage.text = context.getString(R.string.strLanguage, movies[position].original_language)
+        holder.textViewAvg.text = context.getString(R.string.strRating, movies[position].voteAverage)
+        holder.textViewLanguage.text = context.getString(R.string.strLanguage, movies[position].originalLanguage)
 
         holder.itemView.setOnClickListener {
             onItemClick.invoke(movies[position])
