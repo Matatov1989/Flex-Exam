@@ -5,9 +5,19 @@
     <string name="actionBtnPopular">Popular</string>
     <string name="actionCurrentlyAiring">Currently airing</string>
     <string name="actionFavorites">My favorites</string>
+    <string name="actionAddFavorite">Set as favorites</string>
 
     <string name="titlePopularMovies">Popular Movies</string>
     <string name="titlePlayingNowMovies">Play Now Movies</string>
     <string name="titleFavoriteMovies">Favorite Movies</string>
+    <string name="titleDetails">Details</string>
+
+    <string name="strDescription">Description:</string>
+    <string name="strPopularity">Popularity:</string>
+    <string name="strVoteAverage">Vote average:</string>
+    <string name="strVoteCount">Vote count:</string>
+    <string name="strAdult">Adult:</string>
+    <string name="strVideo">Video:</string>
+    <string name="strOriginalLanguage">Original language:</string>
 
 </resources>

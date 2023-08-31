@@ -16,15 +16,17 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.flexexam.R
 import com.example.flexexam.enums.MovieType
 import com.example.flexexam.fragments.movie.MoviesViewModel
+import com.example.flexexam.model.Movie
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 open class BaseFragment : Fragment(){
 
     lateinit var movieViewModel: MoviesViewModel
-    lateinit var progressDialog: Dialog
 
+    private lateinit var progressDialog: Dialog
 
+    lateinit var movieDetail: Movie
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
