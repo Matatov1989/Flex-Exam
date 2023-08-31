@@ -1,0 +1,6 @@
+<resources>
+    <dimen name="paddingProgressDialog">10dp</dimen>
+    <dimen name="progressBarSize">50dp</dimen>
+    <dimen name="progressBarMarginEnd">10dp</dimen>
+    <dimen name="progressBarTextSize">16sp</dimen>
+</resources>

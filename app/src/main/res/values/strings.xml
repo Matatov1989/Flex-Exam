@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">FlexExam</string>
+    <string name="pleaseWait">Please Wait...</string>
+
+    <string name="actionBtnPopular">Popular</string>
+    <string name="actionCurrentlyAiring">Currently airing</string>
+    <string name="actionFavorites">My favorites</string>
+
+    <string name="titlePopularMovies">Popular Movies</string>
+    <string name="titlePlayingNowMovies">Play Now Movies</string>
+    <string name="titleFavoriteMovies">Favorite Movies</string>
+
 </resources>
