@@ -19,6 +19,8 @@
     <string name="strAdult">Adult:</string>
     <string name="strVideo">Video:</string>
     <string name="strOriginalLanguage">Original language:</string>
+    <string name="strRating">Rating: %1$s</string>
+    <string name="strLanguage">Original language is %1$s</string>
 
     <string name="toastAddToFavorite">Added to favorites</string>
 </resources>

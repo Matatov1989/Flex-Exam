@@ -47,6 +47,7 @@ class MoviesFragment : BaseFragment() {
                         is MovieUiState.Success -> {
                             val movies = uiState.movies
                             movieAdapter = MovieListAdapter(
+                                requireContext(),
                                 movies,
                                 onItemClick = { selectedProduct ->
                                     val action = MoviesFragmentDirections.actionMoviesFragmentToMovieDetailsFragment(selectedProduct)

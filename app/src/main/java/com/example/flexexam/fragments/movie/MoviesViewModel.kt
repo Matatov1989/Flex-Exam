@@ -22,14 +22,16 @@ class MoviesViewModel @Inject constructor(private val repository: MovieRepositor
 
     fun getMovies(typeMovie: MovieType) {
         viewModelScope.launch {
-            delay(1000L)
             try {
                 movieUiState.value = MovieUiState.Loading(true)
-                val response = repository.getMovies(typeMovie)
-                val list = response.body()?.results
-
-                list?.let {
-                    movieUiState.value = MovieUiState.Success(it)
+                if (typeMovie == MovieType.Favorite) {
+                    movieUiState.value = MovieUiState.Success(repository.getFavoriteMovie())
+                } else {
+                    val response = repository.getMovies(typeMovie)
+                    val list = response.body()?.results
+                    list?.let {
+                        movieUiState.value = MovieUiState.Success(it)
+                    }
                 }
             } catch (e: Exception) {
                 Log.e("RESULT_EXCEPTION", "result: $e")

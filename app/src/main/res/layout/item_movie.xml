@@ -58,7 +58,16 @@
                     android:textSize="20sp"
                     android:textColor="@color/black"
                     android:textStyle="italic"
-                    tools:text="7.4" />
+                    tools:text="Vote average: 7.4" />
+
+                <TextView
+                    android:id="@+id/textViewLanguage"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="20sp"
+                    android:textColor="@color/black"
+                    android:textStyle="italic"
+                    tools:text="Vote average: 7.4" />
 
             </LinearLayout>
         </LinearLayout>

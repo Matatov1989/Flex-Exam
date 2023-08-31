@@ -20,5 +20,5 @@ class MovieRepository @Inject constructor(
 
     suspend fun insertFavorite(movie: Movie) = movieDao.insertFavorite(movie)
 
-
+    suspend fun getFavoriteMovie() = movieDao.getFavoriteMovie()
 }
