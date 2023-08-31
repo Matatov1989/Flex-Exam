@@ -2,8 +2,12 @@ package com.example.flexexam.model
 
 import android.os.Parcel
 import android.os.Parcelable
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 
+@Entity(tableName = "MovieTable")
 data class Movie(
+    @PrimaryKey
     val id: Int,
     val adult: Boolean,
     val backdrop_path: String,
@@ -64,5 +68,4 @@ data class Movie(
             return arrayOfNulls(size)
         }
     }
-
 }

@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
+import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
@@ -15,6 +16,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import com.example.flexexam.R
 import com.example.flexexam.enums.MovieType
+import com.example.flexexam.fragments.detail.MovieDetailsViewModel
 import com.example.flexexam.fragments.movie.MoviesViewModel
 import com.example.flexexam.model.Movie
 import dagger.hilt.android.AndroidEntryPoint
@@ -23,6 +25,7 @@ import dagger.hilt.android.AndroidEntryPoint
 open class BaseFragment : Fragment(){
 
     lateinit var movieViewModel: MoviesViewModel
+    lateinit var movieDetailsViewModel: MovieDetailsViewModel
 
     private lateinit var progressDialog: Dialog
 
@@ -32,6 +35,7 @@ open class BaseFragment : Fragment(){
         super.onCreate(savedInstanceState)
 
         movieViewModel = ViewModelProvider(this)[MoviesViewModel::class.java]
+        movieDetailsViewModel = ViewModelProvider(this)[MovieDetailsViewModel::class.java]
 
         progressDialog = Dialog(requireContext())
 
@@ -78,6 +82,10 @@ open class BaseFragment : Fragment(){
                     R.id.actionFilterFavorites -> {
                         movieViewModel.getMovies(MovieType.Favorite)
                         initToolbar(title = getString(R.string.titleFavoriteMovies))
+                    }
+                    R.id.actionFavorite -> {
+                        movieDetailsViewModel.insertFavorite(movieDetail)
+                        Toast.makeText(activity, getString(R.string.toastAddToFavorite), Toast.LENGTH_LONG).show()
                     }
                 }
                 return false

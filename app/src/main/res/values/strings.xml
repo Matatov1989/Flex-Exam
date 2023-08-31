@@ -20,4 +20,5 @@
     <string name="strVideo">Video:</string>
     <string name="strOriginalLanguage">Original language:</string>
 
+    <string name="toastAddToFavorite">Added to favorites</string>
 </resources>
