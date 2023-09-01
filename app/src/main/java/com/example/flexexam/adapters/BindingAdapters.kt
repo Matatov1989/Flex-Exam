@@ -14,7 +14,7 @@ object BindingAdapters {
         Glide
             .with(view.context)
             .load("$POSTER_IMG_URL$url")
-            .centerCrop()
+            .centerInside()
             .placeholder(R.drawable.ic_android)
             .into(view)
     }
