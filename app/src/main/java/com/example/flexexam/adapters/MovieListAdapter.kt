@@ -30,7 +30,7 @@ class MovieListAdapter (
         Glide
             .with(holder.itemView)
             .load("${POSTER_IMG_URL}${movies[position].posterPath}")
-            .centerCrop()
+            .centerInside()
             .placeholder(R.drawable.ic_android)
             .into(holder.imageViewPoster)
 
