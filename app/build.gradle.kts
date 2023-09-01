@@ -80,4 +80,7 @@ dependencies {
     // glide library
     implementation("com.github.bumptech.glide:glide:4.13.1")
     annotationProcessor("com.github.bumptech.glide:compiler:4.13.1")
+
+    // paging
+    implementation("androidx.paging:paging-runtime:3.2.0")
 }

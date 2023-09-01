@@ -82,15 +82,15 @@ open class BaseFragment : Fragment(){
             override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
                 when (menuItem.itemId) {
                     R.id.actionFilterPopular -> {
-                        movieViewModel.getMovies(MovieType.Popular)
+                        movieViewModel.fetchMovies(MovieType.Popular)
                         initToolbar(title = getString(R.string.titlePopularMovies))
                     }
                     R.id.actionFilterCurrentlyAiring -> {
-                        movieViewModel.getMovies(MovieType.PlayingNow)
+                        movieViewModel.fetchMovies(MovieType.PlayingNow)
                         initToolbar(title = getString(R.string.titlePlayingNowMovies))
                     }
                     R.id.actionFilterFavorites -> {
-                        movieViewModel.getMovies(MovieType.Favorite)
+                        movieViewModel.fetchMovies(MovieType.Favorite)
                         initToolbar(title = getString(R.string.titleFavoriteMovies))
                     }
                     R.id.actionFavorite -> {

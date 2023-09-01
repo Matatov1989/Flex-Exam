@@ -13,8 +13,8 @@ class MovieRepository @Inject constructor(
     private val movieDao: MovieDao
 ) {
 
-    suspend fun getMovies(typeMovie: MovieType): Response<MovieListResponse> {
-        return if (typeMovie == MovieType.Popular) api.getPopularMovies()
+    suspend fun getMovies(typeMovie: MovieType, page: Int): Response<MovieListResponse> {
+        return if (typeMovie == MovieType.Popular) api.getPopularMovies(page = page)
         else api.getPlayingNowMovies()
     }
 
