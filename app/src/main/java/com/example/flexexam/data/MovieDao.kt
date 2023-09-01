@@ -14,4 +14,11 @@ interface MovieDao {
 
     @Query("SELECT * FROM MovieTable")
     suspend fun getFavoriteMovie(): List<Movie>
+
+    @Query("DELETE FROM MovieTable WHERE id =:idMovie")
+    suspend fun removeFavorite(idMovie: Int)
+
+    @Query("SELECT COUNT(*) FROM MovieTable WHERE id =:idMovie")
+    suspend fun isFavorite(idMovie: Int): Int
+
 }

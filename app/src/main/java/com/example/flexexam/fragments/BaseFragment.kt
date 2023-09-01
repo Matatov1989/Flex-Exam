@@ -3,6 +3,7 @@ package com.example.flexexam.fragments
 import android.annotation.SuppressLint
 import android.app.Dialog
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
@@ -10,6 +11,7 @@ import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.core.content.ContextCompat
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
@@ -28,6 +30,7 @@ open class BaseFragment : Fragment(){
     lateinit var movieDetailsViewModel: MovieDetailsViewModel
 
     private lateinit var progressDialog: Dialog
+    var isFavorite: Boolean = false
 
     lateinit var movieDetail: Movie
 
@@ -66,6 +69,13 @@ open class BaseFragment : Fragment(){
         requireActivity().addMenuProvider(object : MenuProvider {
             override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
                 menuInflater.inflate(menuFragment, menu)
+
+                if (menuFragment == R.menu.menu_details) {
+                    if (isFavorite)
+                        menu.getItem(0).icon = ContextCompat.getDrawable(requireContext(), R.drawable.ic_star)
+                    else
+                        menu.getItem(0).icon = ContextCompat.getDrawable(requireContext(), R.drawable.ic_star_border)
+                }
             }
 
             @SuppressLint("NonConstantResourceId")
@@ -84,8 +94,15 @@ open class BaseFragment : Fragment(){
                         initToolbar(title = getString(R.string.titleFavoriteMovies))
                     }
                     R.id.actionFavorite -> {
-                        movieDetailsViewModel.insertFavorite(movieDetail)
-                        Toast.makeText(activity, getString(R.string.toastAddToFavorite), Toast.LENGTH_LONG).show()
+                        if (isFavorite) {
+                            movieDetailsViewModel.removeFavorite(movieDetail.id)
+                            menuItem.icon = ContextCompat.getDrawable(requireActivity(), R.drawable.ic_star_border)
+                            Toast.makeText(activity, getString(R.string.toastRemoveFromFavorite), Toast.LENGTH_LONG).show()
+                        } else {
+                            movieDetailsViewModel.insertFavorite(movieDetail)
+                            menuItem.icon = ContextCompat.getDrawable(requireActivity(), R.drawable.ic_star)
+                            Toast.makeText(activity, getString(R.string.toastAddToFavorite), Toast.LENGTH_LONG).show()
+                        }
                     }
                 }
                 return false

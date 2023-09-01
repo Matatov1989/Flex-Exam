@@ -21,4 +21,8 @@ class MovieRepository @Inject constructor(
     suspend fun insertFavorite(movie: Movie) = movieDao.insertFavorite(movie)
 
     suspend fun getFavoriteMovie() = movieDao.getFavoriteMovie()
+
+    suspend fun removeFavorite(idMovie: Int) = movieDao.removeFavorite(idMovie)
+
+    suspend fun isFavorite(idMovie: Int) = movieDao.isFavorite(idMovie)
 }
