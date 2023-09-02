@@ -91,7 +91,7 @@ class MoviesFragment : BaseFragment() {
             val refresh = loadStates.refresh
 
             if (refresh is LoadState.NotLoading) {
-                val currentPage = pagingAdapter.itemCount / SIZE_PAGE - 1
+                val currentPage = if (pagingAdapter.itemCount <= SIZE_PAGE) 1 else pagingAdapter.itemCount / SIZE_PAGE - 1
                 binding.textViewNumberPage.text = getString(R.string.strNumberPage, currentPage)
             }
         }

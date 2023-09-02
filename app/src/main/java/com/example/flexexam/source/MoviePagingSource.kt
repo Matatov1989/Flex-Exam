@@ -5,6 +5,7 @@ import androidx.paging.PagingState
 import com.example.flexexam.enums.MovieType
 import com.example.flexexam.model.Movie
 import com.example.flexexam.repository.MovieRepository
+import com.example.flexexam.util.Constants.SIZE_PAGE
 
 class MoviePagingSource (
     private val repository: MovieRepository,
@@ -16,12 +17,17 @@ class MoviePagingSource (
             val page = params.key ?: 1
 
             if (typeMovie == MovieType.Favorite) {
-                val response = repository.getFavoriteMovie()
+                val movies = repository.getFavoriteMovie()
+                var nextPage = if (movies.isNotEmpty()) page + 1 else null
+
+                if (movies.size <= SIZE_PAGE) {
+                    nextPage = null
+                }
 
                 LoadResult.Page(
-                    data = response,
-                    prevKey = null,
-                    nextKey = null
+                    data = movies,
+                    prevKey = if (page == 1) null else page - 1,
+                    nextKey = nextPage
                 )
             } else {
                 val response = repository.getMovies(typeMovie, page)
@@ -32,7 +38,7 @@ class MoviePagingSource (
 
                     LoadResult.Page(
                         data = movies,
-                        prevKey = null,
+                        prevKey = if (page == 1) null else page - 1,
                         nextKey = nextPage
                     )
                 } else {
