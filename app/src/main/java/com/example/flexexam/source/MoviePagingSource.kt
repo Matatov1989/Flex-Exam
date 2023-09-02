@@ -17,33 +17,9 @@ class MoviePagingSource (
             val page = params.key ?: 1
 
             if (typeMovie == MovieType.Favorite) {
-                val movies = repository.getFavoriteMovie()
-                var nextPage = if (movies.isNotEmpty()) page + 1 else null
-
-                if (movies.size <= SIZE_PAGE) {
-                    nextPage = null
-                }
-
-                LoadResult.Page(
-                    data = movies,
-                    prevKey = if (page == 1) null else page - 1,
-                    nextKey = nextPage
-                )
+                loadFromLocalStorage(page)
             } else {
-                val response = repository.getMovies(typeMovie, page)
-
-                if (response.isSuccessful) {
-                    val movies = response.body()?.results ?: emptyList()
-                    val nextPage = if (movies.isNotEmpty()) page + 1 else null
-
-                    LoadResult.Page(
-                        data = movies,
-                        prevKey = if (page == 1) null else page - 1,
-                        nextKey = nextPage
-                    )
-                } else {
-                    LoadResult.Error(Exception("Failed to load data"))
-                }
+                loadFromApi(page)
             }
         } catch (e: Exception) {
             LoadResult.Error(e)
@@ -54,6 +30,40 @@ class MoviePagingSource (
         return state.anchorPosition?.let { anchorPosition ->
             val anchorPage = state.closestPageToPosition(anchorPosition)
             anchorPage?.prevKey?.plus(1) ?: anchorPage?.nextKey?.minus(1)
+        }
+    }
+
+    private suspend fun loadFromLocalStorage(page: Int): LoadResult<Int, Movie> {
+        val movies = repository.getFavoriteMovie()
+        return if (movies.isNotEmpty()) {
+            var nextPage = if (movies.isNotEmpty()) page + 1 else null
+            if (movies.size <= SIZE_PAGE) {
+                nextPage = null
+            }
+            LoadResult.Page(
+                data = movies,
+                prevKey = if (page == 1) null else page - 1,
+                nextKey = nextPage
+            )
+        } else {
+            LoadResult.Error(Exception("Failed: data is empty"))
+        }
+    }
+
+    private suspend fun loadFromApi(page: Int): LoadResult<Int, Movie> {
+        val response = repository.getMovies(typeMovie, page)
+
+        return if (response.isSuccessful) {
+            val movies = response.body()?.results ?: emptyList()
+            val nextPage = if (movies.isNotEmpty()) page + 1 else null
+
+            LoadResult.Page(
+                data = movies,
+                prevKey = if (page == 1) null else page - 1,
+                nextKey = nextPage
+            )
+        } else {
+            LoadResult.Error(Exception("Failed to load data"))
         }
     }
 }

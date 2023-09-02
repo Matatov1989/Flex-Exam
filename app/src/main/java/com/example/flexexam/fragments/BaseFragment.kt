@@ -28,14 +28,12 @@ open class BaseFragment : Fragment(){
 
     lateinit var movieViewModel: MoviesViewModel
     lateinit var movieDetailsViewModel: MovieDetailsViewModel
-
-    private lateinit var progressDialog: Dialog
-    var isFavorite: Boolean = false
-
+    lateinit var pagingAdapter: MovieListAdapter
     lateinit var movieDetail: Movie
 
-    lateinit var pagingAdapter: MovieListAdapter
+    private lateinit var progressDialog: Dialog
 
+    var isFavorite: Boolean = false
     var movieType: MovieType = MovieType.Popular
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -86,23 +84,23 @@ open class BaseFragment : Fragment(){
             override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
                 when (menuItem.itemId) {
                     R.id.actionFilterPopular -> {
+                        initToolbar(title = getString(R.string.titlePopularMovies))
                         movieViewModel.moviesJob?.cancel()
                         movieViewModel.fetchMovies(MovieType.Popular)
-                        initToolbar(title = getString(R.string.titlePopularMovies))
                         pagingAdapter.refresh()
                         movieType = MovieType.Popular
                     }
                     R.id.actionFilterCurrentlyAiring -> {
+                        initToolbar(title = getString(R.string.titlePlayingNowMovies))
                         movieViewModel.moviesJob?.cancel()
                         movieViewModel.fetchMovies(MovieType.PlayingNow)
-                        initToolbar(title = getString(R.string.titlePlayingNowMovies))
                         pagingAdapter.refresh()
                         movieType = MovieType.PlayingNow
                     }
                     R.id.actionFilterFavorites -> {
+                        initToolbar(title = getString(R.string.titleFavoriteMovies))
                         movieViewModel.moviesJob?.cancel()
                         movieViewModel.fetchMovies(MovieType.Favorite)
-                        initToolbar(title = getString(R.string.titleFavoriteMovies))
                         pagingAdapter.refresh()
                         movieType = MovieType.Favorite
                     }
