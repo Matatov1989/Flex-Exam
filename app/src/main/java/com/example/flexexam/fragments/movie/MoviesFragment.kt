@@ -37,14 +37,26 @@ class MoviesFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initToolbar(binding.toolbar, getString(R.string.titlePopularMovies))
         initMenuToolBar(R.menu.menu_movie)
         initObserve()
     }
 
+    override fun onStart() {
+        super.onStart()
+        movieViewModel.fetchMovies(MovieType.Popular)
+    }
+
     override fun onResume() {
         super.onResume()
-        movieViewModel.fetchMovies(MovieType.Popular)
+        initToolbarByMovieType()
+    }
+
+    private fun initToolbarByMovieType() {
+        when (movieType) {
+            MovieType.Popular -> initToolbar(binding.toolbar, getString(R.string.titlePopularMovies))
+            MovieType.PlayingNow -> initToolbar(binding.toolbar, getString(R.string.titlePlayingNowMovies))
+            else -> initToolbar(binding.toolbar, getString(R.string.titleFavoriteMovies))
+        }
     }
 
     private fun initObserve() {

@@ -36,6 +36,8 @@ open class BaseFragment : Fragment(){
 
     lateinit var pagingAdapter: MovieListAdapter
 
+    var movieType: MovieType = MovieType.Popular
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -88,18 +90,21 @@ open class BaseFragment : Fragment(){
                         movieViewModel.fetchMovies(MovieType.Popular)
                         initToolbar(title = getString(R.string.titlePopularMovies))
                         pagingAdapter.refresh()
+                        movieType = MovieType.Popular
                     }
                     R.id.actionFilterCurrentlyAiring -> {
                         movieViewModel.moviesJob?.cancel()
                         movieViewModel.fetchMovies(MovieType.PlayingNow)
                         initToolbar(title = getString(R.string.titlePlayingNowMovies))
                         pagingAdapter.refresh()
+                        movieType = MovieType.PlayingNow
                     }
                     R.id.actionFilterFavorites -> {
                         movieViewModel.moviesJob?.cancel()
                         movieViewModel.fetchMovies(MovieType.Favorite)
                         initToolbar(title = getString(R.string.titleFavoriteMovies))
                         pagingAdapter.refresh()
+                        movieType = MovieType.Favorite
                     }
                     R.id.actionFavorite -> {
                         if (isFavorite) {
