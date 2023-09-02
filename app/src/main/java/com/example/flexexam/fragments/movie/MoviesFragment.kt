@@ -100,11 +100,16 @@ class MoviesFragment : BaseFragment() {
 
     private fun setLoadStateListener(pagingAdapter: MovieListAdapter) {
         pagingAdapter.addLoadStateListener { loadStates ->
-            val refresh = loadStates.refresh
-
-            if (refresh is LoadState.NotLoading) {
-                val currentPage = if (pagingAdapter.itemCount <= SIZE_PAGE) 1 else pagingAdapter.itemCount / SIZE_PAGE - 1
-                binding.textViewNumberPage.text = getString(R.string.strNumberPage, currentPage)
+            when (loadStates.refresh) {
+                is LoadState.NotLoading -> {
+                    val currentPage = if (pagingAdapter.itemCount <= SIZE_PAGE) 1 else pagingAdapter.itemCount / SIZE_PAGE - 1
+                    binding.textViewNumberPage.text = getString(R.string.strNumberPage, currentPage)
+                }
+                is LoadState.Error -> {
+                    movieViewModel.moviesJob?.cancel()
+                    binding.textViewNumberPage.text = getString(R.string.strNumberPage, 0)
+                }
+                else -> {}
             }
         }
     }
