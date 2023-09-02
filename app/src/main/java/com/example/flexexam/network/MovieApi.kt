@@ -16,6 +16,7 @@ interface MovieApi {
 
     @GET("movie/now_playing")
     suspend fun getPlayingNowMovies(
-        @Query("api_key") apiKey: String = MOVIE_API_KEY
+        @Query("api_key") apiKey: String = MOVIE_API_KEY,
+        @Query("page") page: Int
     ): Response<MovieListResponse>
 }

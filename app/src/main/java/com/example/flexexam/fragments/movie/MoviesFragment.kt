@@ -71,7 +71,7 @@ class MoviesFragment : BaseFragment() {
     }
 
     private suspend fun createMoviesList(movies: PagingData<Movie>) {
-        val pagingAdapter = MovieListAdapter(
+        pagingAdapter = MovieListAdapter(
             MovieComparator,
             requireContext(),
             onItemClick = { selectedProduct ->

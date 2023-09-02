@@ -3,7 +3,6 @@ package com.example.flexexam.fragments
 import android.annotation.SuppressLint
 import android.app.Dialog
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
@@ -17,6 +16,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import com.example.flexexam.R
+import com.example.flexexam.adapters.MovieListAdapter
 import com.example.flexexam.enums.MovieType
 import com.example.flexexam.fragments.detail.MovieDetailsViewModel
 import com.example.flexexam.fragments.movie.MoviesViewModel
@@ -33,6 +33,8 @@ open class BaseFragment : Fragment(){
     var isFavorite: Boolean = false
 
     lateinit var movieDetail: Movie
+
+    lateinit var pagingAdapter: MovieListAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -84,14 +86,17 @@ open class BaseFragment : Fragment(){
                     R.id.actionFilterPopular -> {
                         movieViewModel.fetchMovies(MovieType.Popular)
                         initToolbar(title = getString(R.string.titlePopularMovies))
+                        pagingAdapter.refresh()
                     }
                     R.id.actionFilterCurrentlyAiring -> {
                         movieViewModel.fetchMovies(MovieType.PlayingNow)
                         initToolbar(title = getString(R.string.titlePlayingNowMovies))
+                        pagingAdapter.refresh()
                     }
                     R.id.actionFilterFavorites -> {
                         movieViewModel.fetchMovies(MovieType.Favorite)
                         initToolbar(title = getString(R.string.titleFavoriteMovies))
+                        pagingAdapter.refresh()
                     }
                     R.id.actionFavorite -> {
                         if (isFavorite) {

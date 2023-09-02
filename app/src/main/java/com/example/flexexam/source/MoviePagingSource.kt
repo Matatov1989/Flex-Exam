@@ -1,6 +1,5 @@
 package com.example.flexexam.source
 
-import android.util.Log
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.example.flexexam.enums.MovieType
@@ -13,25 +12,35 @@ class MoviePagingSource (
 ) : PagingSource<Int, Movie>() {
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Movie> {
-        try {
+        return try {
             val page = params.key ?: 1
 
-            val response = repository.getMovies(typeMovie, page)
-
-            return if (response.isSuccessful) {
-                val movies = response.body()?.results ?: emptyList()
-                val nextPage = if (movies.isNotEmpty()) page + 1 else null
+            if (typeMovie == MovieType.Favorite) {
+                val response = repository.getFavoriteMovie()
 
                 LoadResult.Page(
-                    data = movies,
+                    data = response,
                     prevKey = null,
-                    nextKey = nextPage
+                    nextKey = null
                 )
             } else {
-                LoadResult.Error(Exception("Failed to load data"))
+                val response = repository.getMovies(typeMovie, page)
+
+                if (response.isSuccessful) {
+                    val movies = response.body()?.results ?: emptyList()
+                    val nextPage = if (movies.isNotEmpty()) page + 1 else null
+
+                    LoadResult.Page(
+                        data = movies,
+                        prevKey = null,
+                        nextKey = nextPage
+                    )
+                } else {
+                    LoadResult.Error(Exception("Failed to load data"))
+                }
             }
         } catch (e: Exception) {
-            return LoadResult.Error(e)
+            LoadResult.Error(e)
         }
     }
 

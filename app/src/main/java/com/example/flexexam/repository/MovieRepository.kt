@@ -15,7 +15,7 @@ class MovieRepository @Inject constructor(
 
     suspend fun getMovies(typeMovie: MovieType, page: Int): Response<MovieListResponse> {
         return if (typeMovie == MovieType.Popular) api.getPopularMovies(page = page)
-        else api.getPlayingNowMovies()
+        else api.getPlayingNowMovies(page = page)
     }
 
     suspend fun insertFavorite(movie: Movie) = movieDao.insertFavorite(movie)
