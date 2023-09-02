@@ -24,4 +24,5 @@
 
     <string name="toastAddToFavorite">Added to favorites</string>
     <string name="toastRemoveFromFavorite">Removed from favorites</string>
+    <string name="strNumberPage">Page is %1$d</string>
 </resources>

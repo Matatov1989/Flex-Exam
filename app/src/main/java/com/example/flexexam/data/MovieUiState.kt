@@ -6,7 +6,7 @@ import kotlinx.coroutines.flow.Flow
 import java.lang.Exception
 
 sealed class MovieUiState {
-    data class Success(val movies: Flow<PagingData<Movie>>) : MovieUiState()
+    data class Success(val movies: PagingData<Movie>) : MovieUiState()
     data class Error(val exception: Exception) : MovieUiState()
     data class Loading(val isLoad: Boolean) : MovieUiState()
 }

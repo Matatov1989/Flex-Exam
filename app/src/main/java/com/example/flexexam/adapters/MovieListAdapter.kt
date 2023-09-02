@@ -24,6 +24,16 @@ class MovieListAdapter(
     private val onItemClick: (Movie) -> Unit
 ) : PagingDataAdapter<Movie, MovieListAdapter.MovieViewHolder>(diffCallback) {
 
+//    init {
+//        addLoadStateListener { loadStates ->
+//            val refresh = loadStates.refresh
+//            if (refresh is LoadState.NotLoading) {
+//                val currentPage = refresh
+////                val pageNumber = currentPage?.prevKey ?: 1 // По умолчанию 1, если prevKey равен null
+//            }
+//        }
+//    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         val view = inflater.inflate(R.layout.item_movie, parent, false)

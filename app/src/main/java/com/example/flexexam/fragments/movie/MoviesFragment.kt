@@ -20,6 +20,8 @@ import com.example.flexexam.databinding.FragmentMoviesBinding
 import com.example.flexexam.enums.MovieType
 import com.example.flexexam.fragments.BaseFragment
 import com.example.flexexam.model.Movie
+import com.example.flexexam.util.Constants
+import com.example.flexexam.util.Constants.SIZE_PAGE
 import com.example.flexexam.util.MovieComparator
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -61,23 +63,18 @@ class MoviesFragment : BaseFragment() {
                                     findNavController().navigate(action)
                                 }
                             )
-                            binding.recyclerViewMovie.adapter = pagingAdapter
-                            movies.collectLatest {
-                                pagingAdapter.submitData(it)
+
+                            pagingAdapter.addLoadStateListener { loadStates ->
+                                val refresh = loadStates.refresh
+
+                                if (refresh is LoadState.NotLoading) {
+                                    val currentPage = pagingAdapter.itemCount / SIZE_PAGE - 1
+                                    binding.textViewNumberPage.text = getString(R.string.strNumberPage, currentPage)
+                                }
                             }
 
-
-
-//                            Log.d("PAGE", "pade is $currentPage")
-//                            movieAdapter = MovieListAdapter(
-//                                requireContext(),
-//                                movies,
-//                                onItemClick = { selectedProduct ->
-//                                    val action = MoviesFragmentDirections.actionMoviesFragmentToMovieDetailsFragment(selectedProduct)
-//                                    findNavController().navigate(action)
-//                                }
-//                            )
-//                            binding.recyclerViewMovie.adapter = movieAdapter
+                            binding.recyclerViewMovie.adapter = pagingAdapter
+                            pagingAdapter.submitData(movies)
                         }
                         is MovieUiState.Error -> {
                             Toast.makeText(context, "Error: ${uiState.exception}", Toast.LENGTH_LONG).show()
@@ -87,9 +84,6 @@ class MoviesFragment : BaseFragment() {
                                 showCustomProgressDialog()
                             else
                                 hideProgressDialog()
-                        }
-                        else -> {
-
                         }
                     }
                 }

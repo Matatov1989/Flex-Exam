@@ -1,5 +1,6 @@
 package com.example.flexexam.source
 
+import android.util.Log
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.example.flexexam.enums.MovieType
@@ -17,17 +18,17 @@ class MoviePagingSource (
 
             val response = repository.getMovies(typeMovie, page)
 
-            if (response.isSuccessful) {
+            return if (response.isSuccessful) {
                 val movies = response.body()?.results ?: emptyList()
                 val nextPage = if (movies.isNotEmpty()) page + 1 else null
 
-                return LoadResult.Page(
+                LoadResult.Page(
                     data = movies,
                     prevKey = null,
                     nextKey = nextPage
                 )
             } else {
-                return LoadResult.Error(Exception("Failed to load data"))
+                LoadResult.Error(Exception("Failed to load data"))
             }
         } catch (e: Exception) {
             return LoadResult.Error(e)
