@@ -26,10 +26,12 @@ class MovieDetailsFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initToolbar(binding.toolbar, getString(R.string.titleDetails), true)
-//        initMenuToolBar(R.menu.menu_details)
         getMovieDetails()
         initObserve()
+    }
 
+    override fun onResume() {
+        super.onResume()
         movieDetailsViewModel.isFavorite(movieDetail.id)
     }
 
