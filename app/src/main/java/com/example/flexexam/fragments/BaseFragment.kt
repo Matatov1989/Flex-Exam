@@ -116,6 +116,7 @@ open class BaseFragment : Fragment(){
                             menuItem.icon = ContextCompat.getDrawable(requireActivity(), R.drawable.ic_star)
                             Toast.makeText(activity, getString(R.string.toastAddToFavorite), Toast.LENGTH_LONG).show()
                         }
+                        isFavorite = !isFavorite
                     }
                 }
                 return false
