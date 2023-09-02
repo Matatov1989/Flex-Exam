@@ -84,16 +84,19 @@ open class BaseFragment : Fragment(){
             override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
                 when (menuItem.itemId) {
                     R.id.actionFilterPopular -> {
+                        movieViewModel.moviesJob?.cancel()
                         movieViewModel.fetchMovies(MovieType.Popular)
                         initToolbar(title = getString(R.string.titlePopularMovies))
                         pagingAdapter.refresh()
                     }
                     R.id.actionFilterCurrentlyAiring -> {
+                        movieViewModel.moviesJob?.cancel()
                         movieViewModel.fetchMovies(MovieType.PlayingNow)
                         initToolbar(title = getString(R.string.titlePlayingNowMovies))
                         pagingAdapter.refresh()
                     }
                     R.id.actionFilterFavorites -> {
+                        movieViewModel.moviesJob?.cancel()
                         movieViewModel.fetchMovies(MovieType.Favorite)
                         initToolbar(title = getString(R.string.titleFavoriteMovies))
                         pagingAdapter.refresh()

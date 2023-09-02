@@ -1,16 +1,12 @@
 package com.example.flexexam.adapters
 
 import android.content.Context
-import android.nfc.Tag
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.paging.LoadState
-import androidx.paging.PagedListAdapter
 import androidx.paging.PagingDataAdapter
-import androidx.paging.PagingSource
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -23,16 +19,6 @@ class MovieListAdapter(
     private val context: Context,
     private val onItemClick: (Movie) -> Unit
 ) : PagingDataAdapter<Movie, MovieListAdapter.MovieViewHolder>(diffCallback) {
-
-//    init {
-//        addLoadStateListener { loadStates ->
-//            val refresh = loadStates.refresh
-//            if (refresh is LoadState.NotLoading) {
-//                val currentPage = refresh
-////                val pageNumber = currentPage?.prevKey ?: 1 // По умолчанию 1, если prevKey равен null
-//            }
-//        }
-//    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
         val inflater = LayoutInflater.from(parent.context)
