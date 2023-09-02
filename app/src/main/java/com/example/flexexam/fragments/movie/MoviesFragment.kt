@@ -1,7 +1,6 @@
 package com.example.flexexam.fragments.movie
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,8 +10,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import androidx.paging.PagingData
 import com.example.flexexam.R
 import com.example.flexexam.adapters.MovieListAdapter
 import com.example.flexexam.data.MovieUiState
@@ -20,17 +18,14 @@ import com.example.flexexam.databinding.FragmentMoviesBinding
 import com.example.flexexam.enums.MovieType
 import com.example.flexexam.fragments.BaseFragment
 import com.example.flexexam.model.Movie
-import com.example.flexexam.util.Constants
 import com.example.flexexam.util.Constants.SIZE_PAGE
 import com.example.flexexam.util.MovieComparator
-import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 
 class MoviesFragment : BaseFragment() {
 
     private lateinit var binding: FragmentMoviesBinding
-    private lateinit var movieAdapter: MovieListAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -45,6 +40,10 @@ class MoviesFragment : BaseFragment() {
         initToolbar(binding.toolbar, getString(R.string.titlePopularMovies))
         initMenuToolBar(R.menu.menu_movie)
         initObserve()
+    }
+
+    override fun onResume() {
+        super.onResume()
         movieViewModel.fetchMovies(MovieType.Popular)
     }
 
@@ -54,27 +53,7 @@ class MoviesFragment : BaseFragment() {
                 movieViewModel.movieLiveData.collect { uiState ->
                     when(uiState) {
                         is MovieUiState.Success -> {
-                            val movies = uiState.movies
-                            val pagingAdapter = MovieListAdapter(
-                                MovieComparator,
-                                requireContext(),
-                                onItemClick = { selectedProduct ->
-                                    val action = MoviesFragmentDirections.actionMoviesFragmentToMovieDetailsFragment(selectedProduct)
-                                    findNavController().navigate(action)
-                                }
-                            )
-
-                            pagingAdapter.addLoadStateListener { loadStates ->
-                                val refresh = loadStates.refresh
-
-                                if (refresh is LoadState.NotLoading) {
-                                    val currentPage = pagingAdapter.itemCount / SIZE_PAGE - 1
-                                    binding.textViewNumberPage.text = getString(R.string.strNumberPage, currentPage)
-                                }
-                            }
-
-                            binding.recyclerViewMovie.adapter = pagingAdapter
-                            pagingAdapter.submitData(movies)
+                            createMoviesList(uiState.movies)
                         }
                         is MovieUiState.Error -> {
                             Toast.makeText(context, "Error: ${uiState.exception}", Toast.LENGTH_LONG).show()
@@ -87,6 +66,33 @@ class MoviesFragment : BaseFragment() {
                         }
                     }
                 }
+            }
+        }
+    }
+
+    private suspend fun createMoviesList(movies: PagingData<Movie>) {
+        val pagingAdapter = MovieListAdapter(
+            MovieComparator,
+            requireContext(),
+            onItemClick = { selectedProduct ->
+                val action = MoviesFragmentDirections.actionMoviesFragmentToMovieDetailsFragment(selectedProduct)
+                findNavController().navigate(action)
+            }
+        )
+
+        setLoadStateListener(pagingAdapter)
+
+        binding.recyclerViewMovie.adapter = pagingAdapter
+        pagingAdapter.submitData(movies)
+    }
+
+    private fun setLoadStateListener(pagingAdapter: MovieListAdapter) {
+        pagingAdapter.addLoadStateListener { loadStates ->
+            val refresh = loadStates.refresh
+
+            if (refresh is LoadState.NotLoading) {
+                val currentPage = pagingAdapter.itemCount / SIZE_PAGE - 1
+                binding.textViewNumberPage.text = getString(R.string.strNumberPage, currentPage)
             }
         }
     }
